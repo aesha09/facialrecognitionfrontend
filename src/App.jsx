@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
+import "./App.css"
 
 const videoConstraints = {
   width: 480,
@@ -36,32 +37,34 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-500 to-indigo-600 text-white flex flex-col items-center justify-center p-4 font-sans">
-      <h1 className="text-4xl font-bold mb-4 drop-shadow">Facial Emotion Recognition</h1>
-
+    <div className="app-container">
+      <h1 className="app-title">Facial Emotion Recognition</h1>
+  
       <Webcam
         audio={false}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         videoConstraints={videoConstraints}
-        className="rounded-2xl shadow-lg border-4 border-white mb-4"
+        className="webcam"
       />
-
+  
       <button
         onClick={captureAndPredict}
-        className="bg-white text-indigo-600 px-6 py-2 rounded-xl font-semibold shadow-md hover:bg-indigo-100 transition"
+        className="detect-button"
         disabled={loading}
       >
         {loading ? 'Analyzing...' : 'Detect Emotion'}
       </button>
-
+  
       {emotion && (
-        <div className="mt-6 p-4 bg-white text-indigo-800 rounded-xl shadow-lg text-center w-64">
-          <p className="text-lg font-semibold">Detected Emotion:</p>
-          <p className="text-3xl font-bold capitalize">{emotion}</p>
-          <p className="text-sm mt-1">Confidence: {confidence}</p>
-        </div>
+        <div className="result-card">
+        <p className="result-label">Detected Emotion:</p>
+        <p className="result-emotion">{emotion}</p>
+        <p className="result-confidence">Confidence: {confidence}</p>
+      </div>
+      
       )}
     </div>
   );
+  
 }
